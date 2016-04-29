@@ -1,0 +1,25 @@
+{
+  "name": "freeze-temp",
+  "description": "Manage temperatures from a server",
+  "main": "index.js",
+  "authors": [
+    "Hild-Franck <franck.hild@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/Hild-Franck/freeze-temp",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-loader": "^1.5.5",
+    "angular-mocks": "^1.5.5",
+    "bootstrap": "^3.3.6"
+  }
+}

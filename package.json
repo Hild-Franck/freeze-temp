@@ -1,0 +1,26 @@
+{
+  "name": "freeze-temp",
+  "version": "1.0.0",
+  "description": "Manage temperatures from a server",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "bower install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hild-Franck/freeze-temp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hild-Franck/freeze-temp/issues"
+  },
+  "homepage": "https://github.com/Hild-Franck/freeze-temp#readme",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-watch": "^1.0.0"
+  }
+}
