@@ -1,3 +1,61 @@
-h1{
-  color: black;
+@initialXpositionOfMenu: -40vw;
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes appearMenu {
+  from {margin-left: @initialXpositionOfMenu;}
+  to {margin-left: 0;}
+}
+
+/* Standard syntax */
+@keyframes appearMenu {
+  from {margin-left: @initialXpositionOfMenu;}
+  to {margin-left: 0;}
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes desappearMenu {
+  from {margin-left: 0;}
+  to {margin-left: @initialXpositionOfMenu;}
+}
+
+/* Standard syntax */
+@keyframes desappearMenu {
+  from {margin-left: 0;}
+  to {margin-left: @initialXpositionOfMenu;}
+}
+
+
+
+
+body
+{
+  text-align: center;
+  margin: 0;
+
+}
+
+#menu
+{
+  width: 40vw;
+  //margin-left: @initialXpositionOfMenu;
+}
+
+#firstMenu
+{
+  width: 100%
+}
+
+#firstMenu > *
+{
+  display: inline-block;
+}
+
+#pseudo
+{
+  float: left;
+}
+
+#settingIcon
+{
+  width: 5%;
 }
