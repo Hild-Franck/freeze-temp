@@ -4,6 +4,12 @@
 
 module.exports = function(grunt){
     grunt.initConfig({
+        ngsrc: {
+            target: {
+                src: ['app/controllers/*.js','app/views/**/*.js'],
+                dest: ['app/index.html']
+            }
+        },
         watch: {
             options:{
                 livereload: true,
@@ -14,7 +20,7 @@ module.exports = function(grunt){
                 'app/views/*.html',
                 'app/*.html'
             ],
-            tasks: ['less']
+            tasks: ['less', 'ngsrc']
         },
         less: {
             development: {
@@ -26,6 +32,7 @@ module.exports = function(grunt){
     });
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-ngsrc');
 
     grunt.registerTask('dev', ['watch']);
 };
