@@ -6,8 +6,16 @@ module.exports = function(grunt){
     grunt.initConfig({
         ngsrc: {
             target: {
-                src: ['app/controllers/*.js','app/views/**/*.js'],
+                cwd: 'app/',
+                src: ['../bower_components/angular/angular.js', 'factories/*.js', 'controllers/*.js','views/**/*.js'],
                 dest: ['app/index.html']
+            }
+        },
+        copy: {
+            main: {
+                files: [
+                    {expand: true, cwd: 'app/views/', src: 'index.html', dest: 'app/'}
+                ]
             }
         },
         watch: {
@@ -17,10 +25,12 @@ module.exports = function(grunt){
             },
             files:[
                 'app/css/*.less',
-                'app/views/*.html',
-                'app/*.html'
+                'app/views/**/*.html',
+                'app/controllers/*.js',
+                'app/*.html',
+                'Gruntfile.js'
             ],
-            tasks: ['less', 'ngsrc']
+            tasks: ['copy', 'less', 'ngsrc']
         },
         less: {
             development: {
@@ -33,6 +43,7 @@ module.exports = function(grunt){
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-ngsrc');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
     grunt.registerTask('dev', ['watch']);
 };
