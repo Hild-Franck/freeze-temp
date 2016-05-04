@@ -1,0 +1,55 @@
+/* Chrome, Safari, Opera */
+@-webkit-keyframes appearMenu {
+  from {
+    margin-left: -40vw;
+  }
+  to {
+    margin-left: 0;
+  }
+}
+/* Standard syntax */
+@keyframes appearMenu {
+  from {
+    margin-left: -40vw;
+  }
+  to {
+    margin-left: 0;
+  }
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes desappearMenu {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: -40vw;
+  }
+}
+/* Standard syntax */
+@keyframes desappearMenu {
+  from {
+    margin-left: 0;
+  }
+  to {
+    margin-left: -40vw;
+  }
+}
+body {
+  text-align: center;
+  margin: 0;
+}
+#menu {
+  width: 40vw;
+}
+#firstMenu {
+  width: 100%;
+}
+#firstMenu > * {
+  display: inline-block;
+}
+#pseudo {
+  float: left;
+}
+#settingIcon {
+  width: 5%;
+}
