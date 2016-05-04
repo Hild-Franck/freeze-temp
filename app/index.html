@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <title>Fridge Temperature</title>
     <link href="css/style.css" rel="stylesheet" />
+    <link href="../bower_components/angular-chart.js/dist/angular-chart.css" rel="stylesheet">
+    <script src='../bower_components/angular/angular.js'></script>
+    <script src='../bower_components/Chart.js/Chart.js'></script>
+    <script src='../bower_components/angular-chart.js/angular-chart.js'></script>
+    <script src="app.js"></script>
     
 <script src="factories/mySocket.js"></script>
 <script src="controllers/charts.js"></script>
@@ -11,18 +16,25 @@
 <script src="controllers/settings.js"></script>
 <script src="controllers/sideMenuController.js"></script>
 <script src="views/sideMenu/sideMenu.js"></script>
-<script src="../bower_components/angular/angular.js"></script>
 
 </head>
-<body>
+<body ng-app="myApp">
 
 
-<menu id="menu">
+<!--<menu id="menu">
     <div id="firstMenu">
         <p id="pseudo">{{pseudo}}</p>
         <img id="settingIcon" src="images/settingIcon.png">
     </div>
-</menu>
+</menu>-->
+
+<main ng-controller="charts">
+    <canvas id="line" class="chart chart-line"
+            width="400" height="200"
+            chart-data="data" chart-labels="labels"
+            chart-legend="true" chart-series="series">
+    </canvas>
+</main>
 
 <script src="//localhost:35729/livereload.js"></script>
 </body>

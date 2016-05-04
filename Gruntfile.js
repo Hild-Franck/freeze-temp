@@ -7,7 +7,15 @@ module.exports = function(grunt){
         ngsrc: {
             target: {
                 cwd: 'app/',
-                src: ['../bower_components/angular/angular.js', 'factories/*.js', 'controllers/*.js','views/**/*.js'],
+                src: [
+                    //'../bower_components/angular/angular.js',
+                    //'app.js',
+                    //'../bower_components/Chart.js/Chart.js',
+                    //'../bower_components/angular-chart.js/angular-chart.js',
+                    'factories/*.js',
+                    'views/**/*.js',
+                    'controllers/**/*.js',
+                ],
                 dest: ['app/index.html']
             }
         },
@@ -28,6 +36,7 @@ module.exports = function(grunt){
                 'app/views/**/*.html',
                 'app/controllers/*.js',
                 'app/*.html',
+                'app/*js',
                 'Gruntfile.js'
             ],
             tasks: ['copy', 'less', 'ngsrc']
