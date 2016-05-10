@@ -5,7 +5,7 @@
 /* Client MongoDB */
 var mongo = require('mongodb').MongoClient;
 var serverMongo = 'mongodb://10.31.3.44:27017/ThermoFridge';
-var serverMongoSmartphone = 'mongodb://groupe4:lacalotte@192.168.43.248:27017/ThermoFridge';
+var serverMongo2 = 'mongodb://groupe4:lacalotte@192.168.43.248:27017/ThermoFridge';
 
 /* Web Server */
 var fs = require('fs');
@@ -38,7 +38,7 @@ mongo.connect(serverMongo, function(err, db){
 
         db.collection('sensors', function(err, col) {
             //On cherche à éviter d'enregistrer des valeurs similaires si elles ont moins de 9sec de décalage
-            if (!err && (((new Date()) - timer) >= 9000 || (dbBuffer[topic.toString()] != message.toString) )) {
+            if (!err && (((new Date()) - timer) >= 9000 || (dbBuffer[topic.toString()] != message.toString()) )) {
                 col.insert({
                     name: topic.toString(),
                     temperature: message.toString(),
@@ -48,7 +48,7 @@ mongo.connect(serverMongo, function(err, db){
                 timer = new Date();
             }
             else
-                console.log('Unable to insert into database');
+                console.log('Unable to insert into database, probably to much similar data since the last 9 secs');
         });
     });
 
