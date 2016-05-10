@@ -1,9 +1,25 @@
 appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
 {
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
+    function getRandomInt(min, max)
+    {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    var heures = [];
+    var capteur1 = [];
+    var capteur2 = [];
+
+    for (var i = 0; i < 24; i++)
+    {
+        heures.push(i+"h");
+        capteur1.push(getRandomInt(0, 20));
+        capteur2.push(getRandomInt(0, 20));
+    }
+
+    $scope.labels = heures;
+    $scope.series = ['Capteur 1', 'Capteur 2'];
     $scope.data = [
-        [65, 59, 80, 81, 56, 55, 40],
-        [28, 48, 40, 19, 86, 27, 90]
+        capteur1,
+       capteur2
     ];
 }]);

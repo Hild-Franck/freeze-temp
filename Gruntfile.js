@@ -6,15 +6,27 @@ module.exports = function(grunt){
     grunt.initConfig({
         ngsrc: {
             target: {
+                options: {
+                    moduleDiscriminator: 'bower_components/**/*.js',
+                },
                 cwd: 'app/',
                 src: [
-                    //'../bower_components/angular/angular.js',
-                    //'app.js',
-                    //'../bower_components/Chart.js/Chart.js',
-                    //'../bower_components/angular-chart.js/angular-chart.js',
+                    './app.js',
                     'factories/*.js',
                     'views/**/*.js',
-                    'controllers/**/*.js',
+                    'controllers/**/*.js'
+                ],
+                dest: ['app/index.html']
+            },
+            modules: {
+                options:  {
+                    placeholder: "<!-- ngsrcmodules -->"
+                },
+                cwd: 'app/',
+                src: [
+                    '../bower_components/angular/angular.js',
+                    '../bower_components/Chart.js/Chart.js',
+                    '../bower_components/angular-chart.js/angular-chart.js'
                 ],
                 dest: ['app/index.html']
             }
@@ -39,7 +51,7 @@ module.exports = function(grunt){
                 'app/*js',
                 'Gruntfile.js'
             ],
-            tasks: ['copy', 'less', 'ngsrc']
+            tasks: ['copy', 'less', 'ngsrc:modules', 'ngsrc:target']
         },
         less: {
             development: {
