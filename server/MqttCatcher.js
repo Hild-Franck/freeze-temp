@@ -15,6 +15,10 @@ var http = require('http');
 var mqtt    = require('mqtt');
 var client  = mqtt.connect('mqtt://messagesight.demos.ibm.com:1883');
 
+//Dans ce buffer nous stockerons les dernières valeurs affin de ne pas enregistrer 15 valeurs similaires en BDD dans la minute
+var dbBuffer = {};
+var timer = new Date();
+
 // On se connecte a notre base de données
 mongo.connect(serverMongo, function(err, db){
     if(err){
@@ -33,12 +37,15 @@ mongo.connect(serverMongo, function(err, db){
         console.log(topic.toString() + " : " + message.toString());
 
         db.collection('sensors', function(err, col) {
-            if (!err) {
+            //On cherche à éviter d'enregistrer des valeurs similaires si elles ont moins de 9sec de décalage
+            if (!err && (((new Date()) - timer) >= 9000 || (dbBuffer[topic.toString()] != message.toString) )) {
                 col.insert({
                     name: topic.toString(),
                     temperature: message.toString(),
                     time: new Date()
                 });
+                dbBuffer[topic.toString()]= message.toString();
+                timer = new Date();
             }
             else
                 console.log('Unable to insert into database');
@@ -63,12 +70,9 @@ mongo.connect(serverMongo, function(err, db){
 
         socket.on('askForData', function(socket)
         {
-            socket.emit('sensorStats', function(){
-                db.collection('sensors', function (err, col) {
-                    
-
-                });
-            });
+            socket.emit('sensorStats', (db.collection('sensors', function (err, col) {
+                col.find().sort({"date": -1}).limit(50)}))
+            );
         });
     });
 });
@@ -78,5 +82,21 @@ mongo.connect(serverMongo, function(err, db){
 
 
 
+/*
+
+ db.collection('sensors', function(err, col) {
+ if (!err && ((timer - (new Date())) >= 9000 || dbBuffer[topic.toString()] != message.toString)) {
+ col.insert({
+ name: topic.toString(),
+ temperature: message.toString(),
+ time: new Date()
+ });
+ dbBuffer[topic.toString()]= message;
+ timer = new Date();
+ }
+ else
+ console.log('Unable to insert into database');
+ });
+ */
 
 
