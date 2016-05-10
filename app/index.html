@@ -32,6 +32,15 @@
 </menu>-->
 
 <main ng-controller="charts">
+    <div id="sensorsList">
+        <label ng-repeat="sensor in series">
+            <input ng-init="checked=true" ng-checked="true"
+                         ng-model="checked" ng-change="checkbox(sensor, checked)"
+                   type="checkbox" value="{{sensor}}">
+            {{sensor}}
+        </label>
+    </div>
+
     <canvas id="line" class="chart chart-line"
             width="400" height="200"
             chart-data="data" chart-labels="labels"
