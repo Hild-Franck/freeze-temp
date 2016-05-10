@@ -1,4 +1,4 @@
-appControllers.controller('settings', ['$scope', '$http', function ($scope, $http)
+myApp.controller('settings', ['$scope', '$http', function ($scope, $http)
 {
 
 }]);
