@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Temperature</title>
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="../bower_components/angular-chart.js/dist/angular-chart.css" rel="stylesheet">
+    <!-- ngsrcmodules -->
+    <!-- ngsrc -->
+</head>
+<body ng-app="myApp">
+
+
+<!--<menu id="menu">
+    <div id="firstMenu">
+        <p id="pseudo">{{pseudo}}</p>
+        <img id="settingIcon" src="images/settingIcon.png">
+    </div>
+</menu>-->
+
+<main ng-controller="charts">
+    <canvas id="line" class="chart chart-line"
+            width="400" height="200"
+            chart-data="data" chart-labels="labels"
+            chart-legend="true" chart-series="series">
+    </canvas>
+</main>
+
+<script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>

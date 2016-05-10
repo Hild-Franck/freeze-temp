@@ -22,9 +22,8 @@
     "angular-mocks": "^1.5.5",
     "bootstrap": "^3.3.6",
     "Chart.js": "chartjs#^2.1.0",
-    "angular-socket-io": "^0.7.0"
-  },
-  "devDependencies": {
-    "AngularHammer": "ryanmullins-angular-hammer#^2.1.10"
+    "angular-socket-io": "^0.7.0",
+    "AngularHammer": "ryanmullins-angular-hammer#^2.1.10",
+    "angular-chart.js": "^0.10.2"
   }
 }
