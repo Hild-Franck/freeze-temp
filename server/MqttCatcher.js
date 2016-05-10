@@ -1,5 +1,5 @@
 /**
- * Created by Mathieu on 29/04/2016.
+ * Created by Mathieu Fontenille on 29/04/2016.
  */
 
 /* Client MongoDB */
@@ -15,33 +15,20 @@ var http = require('http');
 var mqtt    = require('mqtt');
 var client  = mqtt.connect('mqtt://messagesight.demos.ibm.com:1883');
 
-
-mongo.connect(serverMongo, function(err,db){
+// On se connecte a notre base de données
+mongo.connect(serverMongo, function(err, db){
     if(err){
         console.log("Impossible de se connecter ", err);
     }
     else
         console.log("Connection to database:  OK");
-
-
-    //Server web
-    var server = http.createServer(function(request,response){
-        fs.readFile('index.html', 'utf-8', function(err, data)
-        {
-            console.log(err);
-            response.writeHead(200, {'Content-Type': 'text/html'});
-            response.write(data);
-            response.end();
-        });
-    }).listen(8080);
-    var io = require('socket.io').listen(server);
-
-
-    //Mqtt Subscriber
+    //Une fois la connexion établie on se connecte au concetrateur MQTT et on s'abonne au canal ingésup
     client.on('connect', function () {
         client.subscribe('ingesupb2/#');
         client.publish('ingesupb2/groupe4', 'Salut, c\'est le serveur node du groupe 4');
     });
+
+    //On récupère toutes les infos de tous les sous cannaux ingésup pour les ranger dans notre MongoDB
     client.on('message', function (topic, message) {
         console.log(topic.toString() + " : " + message.toString());
 
@@ -55,7 +42,34 @@ mongo.connect(serverMongo, function(err,db){
             }
             else
                 console.log('Unable to insert into database');
+        });
+    });
+
+
+    //Voici le serveur Web qui servira notre appli
+    var server = http.createServer(function(request,response){
+        fs.readFile('index.html', 'utf-8', function(err, data)
+        {
+            console.log(err);
+            response.writeHead(200, {'Content-Type': 'text/html'});
+            response.write(data);
+            response.end();
+        });
+    }).listen(8080);
+    var io = require('socket.io').listen(server);
+
+    //On attends des connexions pour donner les infos des capteurs sockées en base de donnée
+    io.sockets.on('connection', function(socket) {
+
+        socket.on('askForData', function(socket)
+        {
+            socket.emit('sensorStats', function(){
+                db.collection('sensors', function (err, col) {
+                    
+
+                });
             });
+        });
     });
 });
 
@@ -65,11 +79,4 @@ mongo.connect(serverMongo, function(err,db){
 
 
 
-/*   io.sockets.on('connection', function(socket) {
- socket.on('askForData', function(socket)
- {
 
- });
-
- });
- */
