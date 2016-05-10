@@ -15,7 +15,7 @@ var http = require('http');
 var mqtt    = require('mqtt');
 var client  = mqtt.connect('mqtt://messagesight.demos.ibm.com:1883');
 
-//Dans ce buffer nous stockerons les dernières valeurs affin de ne pas enregistrer 15 valeurs similaires en BDD dans la minute
+//Dans ce buffer nous stockerons les dernières valeurs affin de les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
 var dbBuffer = {};
 var timer = new Date();
 
@@ -49,6 +49,7 @@ mongo.connect(serverMongo, function(err, db){
             }
             else
                 console.log('Unable to insert into database, probably to much similar data since the last 9 secs');
+
         });
     });
 
@@ -68,35 +69,14 @@ mongo.connect(serverMongo, function(err, db){
     //On attends des connexions pour donner les infos des capteurs sockées en base de donnée
     io.sockets.on('connection', function(socket) {
 
-        socket.on('askForData', function(socket)
+        socket.on('askForData', function(data)
         {
-            socket.emit('sensorStats', (db.collection('sensors', function (err, col) {
-                col.find().sort({"date": -1}).limit(50)}))
-            );
+            socket.emit('sensorStats', function(){
+                db.collection('sensors', function (err, col)
+                {
+                    col.find().sort({"date": -1}).limit(50)
+                })
+            });
         });
     });
 });
-
-
-
-
-
-
-/*
-
- db.collection('sensors', function(err, col) {
- if (!err && ((timer - (new Date())) >= 9000 || dbBuffer[topic.toString()] != message.toString)) {
- col.insert({
- name: topic.toString(),
- temperature: message.toString(),
- time: new Date()
- });
- dbBuffer[topic.toString()]= message;
- timer = new Date();
- }
- else
- console.log('Unable to insert into database');
- });
- */
-
-
