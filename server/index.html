@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Fridge watcher</title>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-
 </head>
 <body>
 
@@ -14,12 +13,11 @@
 </body>
 </html>
 
-<script type="javascript">
+<script>
     var chat = document.getElementById('chat');
     var server = ('10.31.0.223:8080');
     var socket = io.connect(server);
     var button = document.getElementById('askForData');
-    console.log('ok');
 
     button.addEventListener('click', function(event){
         console.log('Bouton cliqué');
@@ -29,7 +27,7 @@
 
 
     socket.on('sensorStats', function(data){
-
+        console.log(data);
         for (datas in data)
         {
             var parag = document.createElement("p");

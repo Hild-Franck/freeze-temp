@@ -52,13 +52,13 @@ mongo.connect(serverMongo, function(err, db){
 
         });
     });
-
-
+    
     //Voici le serveur Web qui servira notre appli
     var server = http.createServer(function(request,response){
         fs.readFile('index.html', 'utf-8', function(err, data)
         {
-            console.log(err);
+            if (err)
+                console.log(err);
             response.writeHead(200, {'Content-Type': 'text/html'});
             response.write(data);
             response.end();
@@ -68,15 +68,20 @@ mongo.connect(serverMongo, function(err, db){
 
     //On attends des connexions pour donner les infos des capteurs sockées en base de donnée
     io.sockets.on('connection', function(socket) {
+        console.log(socket.request.connection.remoteAddress + " " + socket.id);
 
-        socket.on('askForData', function(data)
+
+        socket.emit('askData', {capteur:{name:"groupe4", temp:((Math.random() * (50 - 24) + 24).toFixed(2)), time: new Date()}});
+
+        socket.on('askForData', function()
         {
-            socket.emit('sensorStats', function(){
-                db.collection('sensors', function (err, col)
-                {
-                    col.find().sort({"date": -1}).limit(50)
-                })
+            var data = db.collection('sensors', function (err, col)
+            {
+                col.find().limit(50).toArray(); //.sort({"date": -1})
             });
+
+            socket.emit('sensorStats', {name:"groupe4", temp:((Math.random() * (50 - 24) + 24).toFixed(2)), time: new Date()});
+            console.log('Socket correctement envoyé');
         });
     });
 });
