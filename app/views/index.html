@@ -20,7 +20,7 @@
 
 <main ng-controller="charts">
     <div id="sensorsList">
-        <label ng-repeat="sensor in series">
+        <label ng-repeat="sensor in series track by $index">
             <input ng-init="checked=true" ng-checked="true"
                          ng-model="checked" ng-change="checkbox(sensor, checked)"
                    type="checkbox" value="{{sensor}}">

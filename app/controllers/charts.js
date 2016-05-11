@@ -36,8 +36,9 @@ appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
         else
         {
             var thenum = sensorName.replace( /^\D+/g, '');
-            console.log(thenum);
-            addSensor(sensorName);
+            thenum--;
+            //addSensor(sensorName, allSensors[thenum]);
+            displaySensor(sensorName);
         }
     };
 
@@ -53,6 +54,14 @@ appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
         var index = $scope.series.indexOf(serieName);
         removeData(index);
         //removeSerie(index);
+    };
+
+    function displaySensor(serieName)
+    {
+        var index = $scope.series.indexOf(serieName);
+        console.log(index);
+        $scope.data[index] = allSensors[index];
+        console.log(allSensors);
         console.log($scope.data);
     };
 
@@ -76,4 +85,6 @@ appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
     {
         $scope.data.splice(index, 1);
     };
+
+
 }]);
