@@ -7,7 +7,7 @@ module.exports = function(grunt){
         ngsrc: {
             target: {
                 options: {
-                    moduleDiscriminator: 'bower_components/**/*.js',
+                    moduleDiscriminator: 'bower_components/**/*.js'
                 },
                 cwd: 'app/',
                 src: [
@@ -24,8 +24,8 @@ module.exports = function(grunt){
                 },
                 cwd: 'app/',
                 src: [
-                    '../bower_components/angular/angular.js',
-                    '../bower_components/Chart.js/Chart.js',
+                    '../bower_components/angular-socket-io/socket.js',
+                    '../bower_components/Chart.js/dist/Chart.js',
                     '../bower_components/angular-chart.js/angular-chart.js'
                 ],
                 dest: ['app/index.html']
