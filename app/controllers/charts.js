@@ -1,4 +1,4 @@
-appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
+appControllers.controller('charts', ['$scope', '$http', 'dataHandler', function ($scope, $http, dataHandler)
 {
     function getRandomInt(min, max)
     {
@@ -6,7 +6,7 @@ appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
     }
 
     var heures = [];
-    var allSensors = []
+    var allSensors = [];
     var capteur1 = [];
     var capteur2 = [];
     allSensors.push(capteur1, capteur2);
