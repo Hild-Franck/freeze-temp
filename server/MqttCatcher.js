@@ -37,8 +37,8 @@ mongo.connect(serverMongo, function(err, db){
         console.log(topic.toString() + " : " + message.toString());
 
         db.collection('sensors', function(err, col) {
-            //On cherche à éviter d'enregistrer des valeurs similaires si elles ont moins de 9sec de décalage
-            if (!err && (((new Date()) - timer) >= 9000 || (dbBuffer[topic.toString()] != message.toString()) )) {
+            //On cherche à éviter d'enregistrer des valeurs inutiles ou invalides
+            if (!err && (((new Date()) - timer) >= 9000 || (dbBuffer[topic.toString()] != message.toString()) && parseFloat(message.toString()) )) {
                 col.insert({
                     name: topic.toString(),
                     temperature: message.toString(),
