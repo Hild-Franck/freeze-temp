@@ -45,7 +45,7 @@ mongo.connect(serverMongo, function(err, db){
             if (!err && (((new Date()) - timer) >= 9000 || (dbBuffer[topic.toString()] != message.toString()) && parseFloat(message.toString()) )) {
                 col.insert({
                     name: topic.toString(),
-                    temperature: message.toString(),
+                    temperature: parseFloat(message.toString()),
                     time: new Date()
                 });
                 dbBuffer[topic.toString()]= message.toString();
@@ -74,12 +74,11 @@ mongo.connect(serverMongo, function(err, db){
     io.sockets.on('connection', function(socket) {
         console.log(socket.request.connection.remoteAddress + " " + socket.id);
 
-        setInterval(function () {
-                db.collection('sensors').find({"name":"ingesupb2/groupe4"}).sort({"time":-1}).limit(1).toArray().then(function(numItems) {
-                socket.emit('lastDatas', {datas: numItems});
-                callback(numItems);
+        db.collection('sensors').find({"name":"ingesupb2/groupe4"}).sort({"time":-1}).limit(10).toArray().then(
+            function(numItems) {
+            socket.emit('lastDatas', {datas: numItems});
+            callback(numItems);
             });
-        }, 1000);
 
 
         });
