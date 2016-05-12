@@ -1,5 +1,9 @@
 /**
  * Created by Mathieu Fontenille on 29/04/2016.
+ *
+ * TODO : - Faire la moyenne des 10 valeurs reçues en 10 sec et les pusher
+ * en BDD juste après
+ *
  */
 
 /* Client MongoDB */
@@ -70,18 +74,13 @@ mongo.connect(serverMongo, function(err, db){
     io.sockets.on('connection', function(socket) {
         console.log(socket.request.connection.remoteAddress + " " + socket.id);
 
-
-        socket.emit('askData', {capteur:{name:"groupe4", temp:((Math.random() * (50 - 24) + 24).toFixed(2)), time: new Date()}});
-
-        socket.on('askForData', function()
-        {
-            var data = db.collection('sensors', function (err, col)
-            {
-                col.find().limit(50).toArray(); //.sort({"date": -1})
+        setInterval(function () {
+                db.collection('sensors').find({"name":"ingesupb2/groupe4"}).sort({"time":-1}).limit(1).toArray().then(function(numItems) {
+                socket.emit('lastDatas', {datas: numItems});
+                callback(numItems);
             });
+        }, 1000);
 
-            socket.emit('sensorStats', {name:"groupe4", temp:((Math.random() * (50 - 24) + 24).toFixed(2)), time: new Date()});
-            console.log('Socket correctement envoyé');
+
         });
     });
-});

@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Fridge watcher</title>
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Fridge watcher</title>
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <style>
+            #chat{
+                height: 60vh;
+                overflow:auto;
+                background-color: darkgray;
+                font-size : 120%;
+                padding-top: 1vh;
 
-<div id="chat"></div>
-<button id="askForData">Demander les données</button>
+                border-top-left-radius: 0px;
+                border-top-right-radius: 10px;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            .post{
+                color: white;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                font-size:80%;
+                margin-left: 1vw;
+            }
+        </style>
 
-</body>
+    </head>
+    <body>
+        <div id="chat"></div>
+        <button id="askForData">Demander les données</button>
+    </body>
 </html>
 
 <script>
@@ -24,8 +44,7 @@
         socket.emit('askForData');
 
     });
-
-
+/*
     socket.on('sensorStats', function(data){
         console.log(data);
         for (datas in data)
@@ -38,5 +57,30 @@
             console.log(data.name + data.temperature + data.time);
         }
     });
+    */
+
+    socket.on('lastDatas', function (data) {
+        console.log('socket.on lastDatas : ' + data.datas[0].name);
+        for(arrays in data.datas) {
+            postToChat(data.datas[arrays].time, data.datas[arrays].name, data.datas[arrays].temperature);
+        }
+    });
+
+    function pageScroll() {
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function postToChat(time, nickname, message){
+        var parag = document.createElement("p");
+        parag.classList.add('post');
+
+        if (time)
+            parag.appendChild(document.createTextNode("[" + time + "]" + nickname + " : " + message));
+        else
+            parag.appendChild(document.createTextNode(nickname + " : " + message));
+
+        chat.appendChild(parag);
+        pageScroll();
+    }
 
 </script>
