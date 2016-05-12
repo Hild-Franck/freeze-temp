@@ -12,6 +12,6 @@ client.on('connect', function () {
     setInterval(function() {
                 console.log('J\'ai publié une température ' + (new Date()).getHours() + ":" + (new Date()).getMinutes() + " " + (new Date()).getSeconds() + "s");
                 client.publish('ingesupb2/groupe4', ((Math.random() * (23 - 21) + 21).toFixed(2)).toString());
-    }, 10000);
+    }, 1000);
 });
 
