@@ -1,7 +1,3 @@
-/**
- * Created by Knarfux on 29/04/2016.
- */
-
 module.exports = function(grunt){
     grunt.initConfig({
         ngsrc: {
@@ -34,7 +30,8 @@ module.exports = function(grunt){
         copy: {
             main: {
                 files: [
-                    {expand: true, cwd: 'app/views/', src: 'index.html', dest: 'app/'}
+                    {expand: true, cwd: 'app/views/', src: 'index.html', dest: 'app/'},
+                    {expand: true, cwd: 'app/views/sideMenu/', src: 'sideMenu.html', dest: 'app/'}
                 ]
             }
         },

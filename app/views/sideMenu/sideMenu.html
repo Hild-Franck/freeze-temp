@@ -1,10 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link href="../../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="../../css/style.css" type="text/css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div class="" id="sideMenu">
+            <a href="#"> Connectez-vous </a>
+            <button type="button" class="btn btn-default btn-lg" id="settings" >
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-lg" id="raccourci" >
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+            </button>
 
-</body>
+                <!--<img src="../../images/tempLogo.png">-->
+            <h1> Observation des températures</h1>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" id="groupe">
+                    Groupe 1
+                    <span class="badge" id="nbCapt">NbCapt</span>
+                    <span class="caret" ></span>
+                </button>
+                <div class="collapse" id="collapseExample">
+                    <ul class="well">
+                        <div class="row">
+                            <li class="col-xs-4">
+                                <button type="button" class="btn btn-default btn-lg" >
+                                    Capteur 1
+                                    <br>
+                                    <span class="badge">35C</span>
+                                    <span class="glyphicon glyphicon-asterisk"   aria-hidden="true"></span>
+                                </button>
+                            </li>
+                            <li class="col-xs-4">
+                                <button type="button" class="btn btn-default btn-lg" >
+                                    Capteur 2
+                                    <br>
+                                    <span class="badge">35C</span>
+                                    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                                </button>
+                            </li>
+                            <li class="col-xs-4">
+                                <button type="button" class="btn btn-default btn-lg" >
+                                    Capteur 3
+                                    <br>
+                                    <span class="badge">35C</span>
+                                    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                                </button>
+                            <li class="col-xs-4">
+                                <button type="button" class="btn btn-default btn-lg" >
+                                    Capteur 3
+                                    <br>
+                                    <span class="badge">35C</span>
+                                    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                                </button>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+        </div>
+        <script>
+            document.querySelector('#raccourci').addEventListener(
+                    'click',
+                    function() {
+                        document.querySelector('#sideMenu').classList.toggle('show');
+                    }
+                    , false
+            );
+
+            document.querySelector('#groupe').addEventListener(
+                    'click',
+                    function() {
+                        var doc = document.querySelector('.caret');
+                        if (doc.id == "rotate" ){
+                            doc.removeAttribute("id");
+                        } else {
+                            doc.setAttribute("id", "rotate");
+                        }
+
+                    }
+                    , false
+            );
+        </script>
+        <script src="../../../bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="../../../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+    </body>
 </html>
