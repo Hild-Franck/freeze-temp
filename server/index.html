@@ -29,7 +29,6 @@
     </head>
     <body>
         <div id="chat"></div>
-        <button id="askForData">Demander les données</button>
     </body>
 </html>
 
@@ -38,26 +37,6 @@
     var server = ('10.31.0.223:8080');
     var socket = io.connect(server);
     var button = document.getElementById('askForData');
-
-    button.addEventListener('click', function(event){
-        console.log('Bouton cliqué');
-        socket.emit('askForData');
-
-    });
-/*
-    socket.on('sensorStats', function(data){
-        console.log(data);
-        for (datas in data)
-        {
-            var parag = document.createElement("p");
-            parag.classList.add('post');
-            parag.appendChild(document.createTextNode("[" + datas.name + "]" + datas.temperature + " : " + datas.time));
-            chat.appendChild(parag);
-
-            console.log(data.name + data.temperature + data.time);
-        }
-    });
-    */
 
     socket.on('lastDatas', function (data) {
         console.log('socket.on lastDatas : ' + data.datas[0].name);
@@ -69,7 +48,7 @@
     function pageScroll() {
         chat.scrollTop = chat.scrollHeight;
     }
-
+    
     function postToChat(time, nickname, message){
         var parag = document.createElement("p");
         parag.classList.add('post');
