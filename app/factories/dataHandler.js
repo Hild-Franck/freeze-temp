@@ -37,9 +37,13 @@ myApp.factory('dataHandler', ['socket', function(socket){
 
             // Manage chart data
             data.data[index].push(dataToProcess.temperature);
+
+            if(data.data[index].length >= 30){
+                data.data[index].splice(0, 1);
+                if(data.labels.length >= 30)
+                    data.labels.splice(0,1)
+            }
         }
-        console.log(tempData);
-        console.log(data)
     }
 
     /**
@@ -57,7 +61,6 @@ myApp.factory('dataHandler', ['socket', function(socket){
      */
 
     socket.on('autoUpdate', function(serverData){
-        console.log(serverData);
         processData(serverData);
     });
 
