@@ -20,8 +20,9 @@ module.exports = function(grunt){
                 },
                 cwd: 'app/',
                 src: [
+                    '../node_modules/socket.io-client/socket.io.js',
                     '../bower_components/angular-socket-io/socket.js',
-                    '../bower_components/Chart.js/dist/Chart.js',
+                    '../bower_components/Chart.js/Chart.js',
                     '../bower_components/angular-chart.js/angular-chart.js'
                 ],
                 dest: ['app/index.html']
