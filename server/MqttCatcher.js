@@ -16,16 +16,16 @@ var serverMongo = 'mongodb://10.31.3.44:27017/ThermoFridge';
 var serverMongoMaison = 'mongodb://192.168.0.27:27017/ThermoFridge';
 var serverMongo2 = 'mongodb://groupe4:lacalotte@192.168.43.248:27017/ThermoFridge';
 var app = require('./express/app');
-
-/* Web Server */
-// var fs = require('fs');
-// var http = require('http');
+var io = require('socket.io').listen(app);
 
 /* Mqtt subscriber */
 var mqtt = require('mqtt');
 var client = mqtt.connect('mqtt://messagesight.demos.ibm.com:1883');
 
+
 //Dans ces buffers nous stockerons les dernières valeurs affin de les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
+// pour les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
+
 var correctValueBuffer = {};
 var valueBuffer = {"buffer1": {}, "buffer2": {}};
 var bufferToUse = true;
@@ -114,17 +114,6 @@ mongo.connect(serverMongo, function (err, db) {
     });
 
 //6- --------------------------W     E       B--------------------------
-	// var server = http.createServer(function (request, response) {
-	// 	fs.readFile('index.html', 'utf-8', function (err, data) {
-	// 		if (err)
-	// 			console.log(err);
-	// 		response.writeHead(200, {'Content-Type': 'text/html'});
-	// 		response.write(data);
-	// 		response.end();
-	// 	});
-	// }).listen(8080);
-	var io = require('socket.io').listen(app);
-	
 	app.listen(4000, '0.0.0.0', err => {
 		if (err) throw err;
 		console.log('Server listening on :4000');
