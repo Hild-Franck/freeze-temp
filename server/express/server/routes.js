@@ -19,12 +19,21 @@ router.get('/', function (req, res) {
 router.get('/all', function (req, res) {
   mongo.connect(serverMongo, function (err, db) {
     db.collection('sensors').find({}).sort({"time": -1}).limit(10).toArray()
-      .then(function (numItems) {
-        res.json({data: numItems.sort({"time": 1})});
-      });
+    .then(function (numItems) {
+      res.json({data: numItems.sort({"time": 1})});
+    });
   });
 });
 
-router.get('/groupe/:id')
+router.get('/group/:id', function (req, res) {
+  if (req.params.id) {
+    mongo.connect(serverMongo, function (err, db) {
+      db.collection('sensors').find({"name": `ingesupb2/${req.params.id}`}).sort({"time": -1}).limit(10).toArray()
+        .then(function (numItems) {
+          res.json({data: numItems.sort({"time": 1})});
+        });
+    });
+  }
+})
 
 module.exports = router;
