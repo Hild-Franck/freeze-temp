@@ -32,7 +32,7 @@ var mqttTimer = new Date();
 var globalTimer = new Date();
 
 //2- --------------------------CONNEXION MONGO DB--------------------------
-mongo.connect(serverMongoMaison, function (err, db) {
+mongo.connect(serverMongo, function (err, db) {
     if (err) {
         console.log("Impossible de se connecter ", err);
     }
@@ -68,13 +68,16 @@ mongo.connect(serverMongoMaison, function (err, db) {
                      console.log("Voici le contenu de message : " + (valueBuffer[bufferToUseName][topic.toString()]));
                  }
                 else if (valueBuffer[bufferToUseName.toString()][topic.toString()] || valueBuffer[bufferToUseName.toString()][topic.toString()] == 0) {
+                console.log('buffer : ' + valueBuffer[bufferToUseName.toString()][topic.toString()].message);
+                    valueBuffer[bufferToUseName.toString()][topic.toString()].message += (parseFloat(message));
+                    valueBuffer[bufferToUseName.toString()][topic.toString()].count += 1;
 
-                    valueBuffer[bufferToUseName.toString()][topic.toString()] = {
+                    /*{
                         // -TODO : LE PROGRAMME CRASHE ICI : APRES CE COMMENTAIRE AU .message
-                        "message": valueBuffer[topic.toString()].message + (parseFloat(message)),
-                        "count": (valueBuffer[topic.toString()].count + 1)
-                    };
-                    console.log("jai passe le 3eme if compteur de" + topic.toString() + valueBuffer[topic.toString()].count);
+                        "message": valueBuffer[bufferToUseName.toString()][topic.toString()].message + (parseFloat(message)),
+                        "count": (valueBuffer[bufferToUseName.toString()][topic.toString()].count + 1)
+                    };*/
+                    console.log("jai passe le 3eme if compteur de" + topic.toString() + ': ' + valueBuffer[bufferToUseName.toString()][topic.toString()].count);
                 }
 
                 if ((new Date()) - globalTimer >= 10000) {
