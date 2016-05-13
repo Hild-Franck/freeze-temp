@@ -79,9 +79,7 @@ mongo.connect(serverMongo, function (err, db) {
                     var actualBuffer = bufferToUseName;
                     bufferToUse = !bufferToUse;
                     console.log('on change de buffer : '+bufferToUseName);
-
-
-
+                    var dateForDatabase = new Date();
 
                     for (arrays in valueBuffer[actualBuffer]) {
                         (valueBuffer[actualBuffer][arrays].message =
@@ -90,13 +88,13 @@ mongo.connect(serverMongo, function (err, db) {
                             name: arrays.toString(),
                             //temperature: parseFloat(message.toString()),  OLD
                             temperature: parseFloat(valueBuffer[actualBuffer][arrays].message).toFixed(2),
-                            time: new Date()
+                            time: dateForDatabase
                         });
                         io.sockets.emit('autoUpdate', {datas: {
                             name: arrays.toString(),
                             //temperature: parseFloat(message.toString()),  OLD
                             temperature: parseFloat(valueBuffer[actualBuffer][arrays].message).toFixed(2),
-                            time: new Date()
+                            time: dateForDatabase
                         }});
                         console.log('J\'ai pushé en BDD' + valueBuffer[actualBuffer][arrays].message);
                     }
