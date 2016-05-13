@@ -21,12 +21,8 @@ router.get('/all', function (req, res) {
     db.collection('sensors').find({}).sort({"time": -1}).limit(50).toArray()
     .then(function (numItems) {
       res.json({data: numItems.sort({"time": 1}).map(obj => {
-        var date = new Date(obj.time);
-        return {
-          name: obj.name,
-          temperature: obj.temperature,
-          time: `${date.getMonth()} - ${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}` 
-        }
+        obj._id = undefined
+        return obj;
       })});
     });
   });
@@ -38,12 +34,8 @@ router.get('/group/:id', function (req, res) {
       db.collection('sensors').find({"name": `ingesupb2/${req.params.id}`}).sort({"time": -1}).limit(50).toArray()
         .then(function (numItems) {
           res.json({data: numItems.sort({"time": 1}).map(obj => {
-            var date = new Date(obj.time);
-            return {
-              name: obj.name,
-              temperature: obj.temperature,
-              time: `${date.getMonth()} - ${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}` 
-            }
+            obj._id = undefined
+            return obj;
           })});
         });
     });
