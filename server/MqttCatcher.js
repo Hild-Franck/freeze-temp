@@ -18,16 +18,14 @@ var serverMongo = 'mongodb://10.31.3.44:27017/ThermoFridge';
 var serverMongoMaison = 'mongodb://192.168.0.27:27017/ThermoFridge';
 var serverMongo2 = 'mongodb://groupe4:lacalotte@192.168.43.248:27017/ThermoFridge';
 var app = require('./express/app');
-
-/* Web Server */
-// var fs = require('fs');
-// var http = require('http');
+var io = require('socket.io').listen(app);
 
 /* Mqtt subscriber */
 var mqtt = require('mqtt');
 var client = mqtt.connect('mqtt://messagesight.demos.ibm.com:1883');
 
-//Dans ces buffers nous stockerons les dernières valeurs affin de les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
+//Dans ces buffers nous stockerons les dernières valeurs 
+// pour les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
 var correctValueBuffer = {};
 var valueBuffer = {"buffer1": {}, "buffer2": {}};
 var bufferToUse = true;
@@ -57,7 +55,7 @@ mongo.connect(serverMongo, function (err, db) {
 			//On cherche à éviter d'enregistrer des valeurs inutiles ou invalides
 			//Si il n'y a pas d'erreurs et si la dernière valeur valeur n'est pas similaire à la dernière reçue dans les 9 sec et qu'elle est est correcte
 			if (!err && (parseFloat(message.toString())) && (((new Date()) - mqttTimer) >= 9000 
-				|| ((correctValueBuffer[topic.toString()]) != message.toString()))) {
+			|| ((correctValueBuffer[topic.toString()]) != message.toString()))) {
 				console.log('jai passé le premier if');
 				var bufferToUseName;
 				if (bufferToUse == true) bufferToUseName = "buffer1";
@@ -72,8 +70,8 @@ mongo.connect(serverMongo, function (err, db) {
 					 console.log("Voici le contenu de message : " + (valueBuffer[bufferToUseName][topic.toString()]));
 				 }
 				else if (valueBuffer[bufferToUseName.toString()][topic.toString()] 
-					|| valueBuffer[bufferToUseName.toString()][topic.toString()] == 0) {
-				console.log('buffer : ' + valueBuffer[bufferToUseName.toString()][topic.toString()].message);
+				|| valueBuffer[bufferToUseName.toString()][topic.toString()] == 0) {
+					console.log('buffer : ' + valueBuffer[bufferToUseName.toString()][topic.toString()].message);
 					valueBuffer[bufferToUseName.toString()][topic.toString()].message += (parseFloat(message));
 					valueBuffer[bufferToUseName.toString()][topic.toString()].count += 1;
 
@@ -119,17 +117,6 @@ mongo.connect(serverMongo, function (err, db) {
 
 
 //6- --------------------------W     E       B--------------------------
-	// var server = http.createServer(function (request, response) {
-	// 	fs.readFile('index.html', 'utf-8', function (err, data) {
-	// 		if (err)
-	// 			console.log(err);
-	// 		response.writeHead(200, {'Content-Type': 'text/html'});
-	// 		response.write(data);
-	// 		response.end();
-	// 	});
-	// }).listen(8080);
-	var io = require('socket.io').listen(app);
-	
 	app.listen(4000, '0.0.0.0', err => {
 		if (err) throw err;
 		console.log('Server listening on :4000');
