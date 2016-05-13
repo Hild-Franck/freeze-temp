@@ -5,6 +5,7 @@
   "main": "ArduinoSimulator.js",
   "dependencies": {
     "compression": "^1.6.2",
+    "cors": "^2.7.1",
     "express": "^4.13.4",
     "mongodb": "^2.1.18",
     "mongoose": "^4.4.14",
