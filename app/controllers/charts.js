@@ -1,29 +1,10 @@
-appControllers.controller('charts', ['$scope', '$http', 'dataHandler', function ($scope, $http, dataHandler)
+appControllers.controller('charts', ['$scope', '$http', '$interval', 'dataHandler', function ($scope, $http, $interval, dataHandler)
 {
-    function getRandomInt(min, max)
-    {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+    $scope.labels = dataHandler.getData().labels;
+    $scope.series = ["capteur1"];
+    $scope.data = [dataHandler.getData().temp["capteur1"]];
 
-    var heures = [];
-    var allSensors = [];
-    var capteur1 = [];
-    var capteur2 = [];
-    allSensors.push(capteur1, capteur2);
-
-    for (var i = 0; i < 24; i++)
-    {
-        heures.push(i+"h");
-        capteur1.push(getRandomInt(0, 20));
-        capteur2.push(getRandomInt(0, 20));
-    }
-
-    $scope.labels = heures;
-    $scope.series = [];
-    $scope.data = [];
-
-    addSensor("Capteur 1", capteur1);
-    addSensor("Capteur 2", capteur2);
+    console.log($scope.labels, $scope.series, $scope.data);
 
 
     $scope.checkbox = function (sensorName, etat)
@@ -45,35 +26,25 @@ appControllers.controller('charts', ['$scope', '$http', 'dataHandler', function 
     function addSensor(serieName, dataSensor)
     {
         addSerie(serieName);
-        addData(dataSensor);  
-    };
-    
+        addData(dataSensor);
+    }
+
     function removeSensor(serieName)
     {
         var index = $scope.series.indexOf(serieName);
         removeData(index);
         //removeSerie(index);
         console.log($scope.data);
-    };
+    }
 
 
     function addSerie(serieName)
     {
         $scope.series.push(serieName);
-    };
-
-    function addData(dataSensor)
-    {
-        $scope.data.push(dataSensor);
-    };
+    }
 
     function removeSerie(index)
     {
         $scope.series.splice(index, 1);
-    };
-
-    function removeData(index)
-    {
-        $scope.data.splice(index, 1);
-    };
+    }
 }]);
