@@ -7,7 +7,7 @@
  * - Webserver (anti XSS)
  * - Serve database MQTT datas for clients (JSON object via socket)
  *
- * TODO : - Faire la moyenne des 10 valeurs reçues en 10 sec et les pusher en BDD juste après
+ * TODO : - Faire la moyenne des 10 valeurs reï¿½ues en 10 sec et les pusher en BDD juste aprï¿½s
  */
 //1- --------------------------SUPER VARIABLES GLOBALES--------------------------
 /* Client MongoDB */
@@ -23,7 +23,7 @@ var mqtt = require('mqtt');
 var client = mqtt.connect('mqtt://messagesight.demos.ibm.com:1883');
 
 
-//Dans ces buffers nous stockerons les dernières valeurs affin de les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
+//Dans ces buffers nous stockerons les derniï¿½res valeurs affin de les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
 // pour les comparer avec les nouvelles et ne pas enregistrer 15 valeurs similaires en BDD dans la minute
 
 var correctValueBuffer = {};
@@ -42,7 +42,7 @@ mongo.connect(serverMongo, function (err, db) {
 
 //3- --------------------------SOUSCRIPTION AU CANAL MQTT--------------------------
 	client.on('connect', function () {
-		client.subscribe('ingesupb2/groupe4');
+		client.subscribe('ingesupb2/#');
 		client.publish('ingesupb2/groupe4', 'Salut, c\'est le serveur node du groupe 4');
 	});
 
@@ -52,8 +52,8 @@ mongo.connect(serverMongo, function (err, db) {
 
 //5- --------------------------VERIFICATION ET TRAITEMENT DES DONNEES AVANT LE PUSH EN BDD--------------------------
         db.collection('sensors', function (err, col) {
-            //On cherche à éviter d'enregistrer des valeurs inutiles ou invalides
-            //Si il n'y a pas d'erreurs et si la dernière valeur valeur n'est pas similaire à la dernière reçue dans les 9 sec et qu'elle est est correcte
+            //On cherche ï¿½ ï¿½viter d'enregistrer des valeurs inutiles ou invalides
+            //Si il n'y a pas d'erreurs et si la derniï¿½re valeur valeur n'est pas similaire ï¿½ la derniï¿½re reï¿½ue dans les 9 sec et qu'elle est est correcte
             if (!err && (parseFloat(message.toString())) && (((new Date()) - mqttTimer) >= 9000 || ((correctValueBuffer[topic.toString()]) != message.toString()))) {
                 var bufferToUseName = "buffer1";
                 if (bufferToUse == true) bufferToUseName = "buffer1";
@@ -64,14 +64,15 @@ mongo.connect(serverMongo, function (err, db) {
                      valueBuffer[bufferToUseName.toString()][topic.toString()] = {"message": 0, "count": 0};
                      valueBuffer[bufferToUseName.toString()][topic.toString()].message = 0;
                      valueBuffer[bufferToUseName.toString()][topic.toString()].count = 0;
-                     console.log('jai passé le 2eme if sous buffer ' + bufferToUseName + " " + topic.toString() + ' initialisé');
+                     console.log('jai passÃ© le 2eme if sous buffer ' + bufferToUseName + " " + topic.toString() + ' initialisï¿½');
                  }
                 if (valueBuffer[bufferToUseName.toString()][topic.toString()]) {
 
                     valueBuffer[bufferToUseName.toString()][topic.toString()].message += (parseFloat(message));
                     valueBuffer[bufferToUseName.toString()][topic.toString()].count += 1;
-                    console.log('buffer : ' + valueBuffer[bufferToUseName.toString()][topic.toString()].message);
-                    console.log("jai passe le 3eme if compteur de" + topic.toString() + ': ' + valueBuffer[bufferToUseName.toString()][topic.toString()].count);
+                    console.log('buffer de ' + topic.toString()+ ' : '
+                        + valueBuffer[bufferToUseName.toString()][topic.toString()].message +
+                        ' compteur : ' + valueBuffer[bufferToUseName.toString()][topic.toString()].count);
                 }
 
                 if ((new Date()) - globalTimer >= 10000) {
@@ -79,10 +80,12 @@ mongo.connect(serverMongo, function (err, db) {
                     bufferToUse = !bufferToUse;
                     console.log('on change de buffer : '+bufferToUseName);
 
-                    (valueBuffer[actualBuffer][topic.toString()].message =
-                        ((valueBuffer[actualBuffer][topic.toString()].message)/ (valueBuffer[actualBuffer][topic.toString()].count)));
+
+
 
                     for (arrays in valueBuffer[actualBuffer]) {
+                        (valueBuffer[actualBuffer][arrays].message =
+                            ((valueBuffer[actualBuffer][arrays].message)/ (valueBuffer[actualBuffer][arrays].count)));
                         col.insert({
                             name: arrays.toString(),
                             //temperature: parseFloat(message.toString()),  OLD
@@ -95,8 +98,9 @@ mongo.connect(serverMongo, function (err, db) {
                             temperature: parseFloat(valueBuffer[actualBuffer][arrays].message).toFixed(2),
                             time: new Date()
                         }});
+                        console.log('J\'ai pushÃ© en BDD' + valueBuffer[actualBuffer][arrays].message);
                     }
-                    console.log('J\'ai pushé en BDD');
+
                     globalTimer = new Date();
                     valueBuffer[actualBuffer]= {};
 
@@ -123,10 +127,9 @@ mongo.connect(serverMongo, function (err, db) {
     io.sockets.on('connection', function (socket) {
         console.log(socket.request.connection.remoteAddress + " " + socket.id);
 
-        db.collection('sensors').find({"name": "ingesupb2/groupe4"}).sort({"time": -1}).limit(20).toArray().then(
+        db.collection('sensors').find(/*{"name": "ingesupb2/groupe4"}*/).sort({"time": -1}).limit(50).toArray().then(
             function (numItems) {
                 socket.emit('lastDatas', {datas: numItems.sort({"time": 1})});
-               // callback(numItems);
                 return;
             });
 
