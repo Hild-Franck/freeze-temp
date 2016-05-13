@@ -1,4 +1,5 @@
 @initialXpositionOfMenu: -40vw;
+@sensorColor: #2ecc71;
 
 /* Chrome, Safari, Opera */
 @-webkit-keyframes appearMenu {
@@ -60,4 +61,252 @@ body
   width: 5%;
 }
 
+#sideMenu {
+  position: fixed;
+  height: 100%;
+  width: 25%;
+  background: #2b2b2b;
+  margin: 0;
+  left: -25%;
+  transition: left 0.4s;
+}
 
+#sideMenu.show {
+  left: 0;
+}
+
+#sideMenu a {
+  font-size: 110%;
+  color: white;
+  position: absolute;
+  display: inline-block;
+  font-weight: bold;
+}
+
+#sideMenu h1 {
+  font-size: 130%;
+  color: white;
+  font-weight: bold;
+  margin: 0 0 5% 0;
+}
+
+#sideMenu button {
+  width: 100%;
+  height: 8%;
+  font-size: 120%;
+  font-weight: normal;
+  color: white;
+  background: #403F3F;
+  border: 0 solid #1f1f1f;
+  margin: 0;
+  border-radius: 0;
+  text-align: right;
+}
+
+#sideMenu #settings {
+  width: 20%;
+  height: auto;
+  color: #2b2b2b;
+  background: white;
+  border: 2px solid #1f1f1f;
+  margin: 5% 0 5% 75%;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#sideMenu #raccourci {
+  width: 20%;
+  height: 8%;
+  color: white;
+  background: #2b2b2b;
+  border: 0 solid #1f1f1f;
+  margin: -15% 0 5% 98%;
+  padding-bottom: 14px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#sideMenu #nbCapt {
+  background: white;
+  color: #2b2b2b;
+  font-size: 50%;
+}
+
+#sideMenu ul button {
+  margin-bottom: 10px;
+  font-size: 100%;
+  text-align: center;
+  display: inline-block;
+  background: @sensorColor;
+  border-radius: 15px;
+  transition: width 0.4s;
+  width: 7vw;
+  height: 5vw;
+}
+
+#sideMenu li{
+  margin: 0 3px 0 3px;
+  width: 7vw;
+}
+
+#sideMenu .badge {
+  font-size: 90%;
+  background: #2ecc71;
+  opacity: 1;
+}
+
+#sideMenu #nbCapt {
+  background: white;
+  color: #2b2b2b;
+  font-size: 100%;
+}
+
+.caret {
+  border-width: 15px;
+  transition: transform 0.19s;
+}
+
+#rotate {
+  transform: rotate(180deg);
+}
+
+#sideMenu ul {
+  padding: 15px 0 0 10px;
+  list-style-type: none;
+  height: 250px;
+}
+
+.glyphicon.glyphicon-cog {
+  font-size: 200%;
+}
+
+.glyphicon.glyphicon-th-large {
+  font-size: 200%;
+}
+
+.glyphicon.glyphicon-th-list {
+  font-size: 200%;
+}
+@media screen and (min-device-width: 768px) and (max-device-width: 1200px) {
+
+  #sideMenu {
+    position: fixed;
+    height: 100%;
+    width: 30%;
+    background: #2b2b2b;
+    margin: 0;
+    left: -30%;
+    transition: left 0.4s;
+  }
+  #sideMenu.show {
+    left: 0;
+  }
+  #sideMenu #settings {
+    width: 30%;
+    margin: 5% 0 5% 60%;
+  }
+
+  #sideMenu #raccourci {
+    width: 30%;
+    margin: -15% 0 5% 95%;
+  }
+
+  #sideMenu ul {
+    padding: 15px 0 0 10px;
+    list-style-type: none;
+    height: 200px;
+  }
+
+  #sideMenu ul button {
+
+    font-size: 100%;
+    border-radius: 10px;
+    width: 9vw;
+    height: 6vw;
+  }
+
+  #sideMenu li{
+    width: 9vw;
+  }
+
+  .glyphicon.glyphicon-th-list {
+    font-size: 200%;
+  }
+}
+@media screen and (min-device-width: 200px) and (max-device-width: 768px) {
+
+  #sideMenu {
+    position: fixed;
+    height: 100%;
+    width: 80%;
+    background: #2b2b2b;
+    margin: 0;
+    left: -80%;
+    transition: left 0.4s;
+  }
+
+  #sideMenu.show {
+
+    left: 0;
+  }
+
+  #sideMenu h1 {
+    font-size: 300%;
+    color: white;
+    font-weight: bold;
+    margin: 0 0 5% 0;
+  }
+
+  #sideMenu a {
+    font-size: 300%;
+  }
+
+  #sideMenu button {
+    width: 100%;
+    height: 10%;
+    font-size: 350%;
+    font-weight: bold;
+  }
+
+  #sideMenu #raccourci {
+    margin: -15% 0 5% 99%;
+  }
+
+  #sideMenu .badge {
+    font-size: 80%;
+    background: #2ecc71;
+  }
+
+  #sideMenu #nbCapt {
+    font-size: 80%;
+  }
+
+  #sideMenu ul {
+    height: 350px;
+  }
+
+  #sideMenu ul button {
+    font-size: 220%;
+    text-align: center;
+    height: 15vw;
+    width: 20vw;
+  }
+
+  #sideMenu li{
+    margin: 0;
+    width: auto;
+  }
+
+
+  .glyphicon.glyphicon-cog {
+    font-size: 250%;
+  }
+
+  .glyphicon.glyphicon-th-large {
+    font-size: 300%;
+  }
+
+  .glyphicon.glyphicon-th-list {
+    font-size: 180%;
+  }
+}
