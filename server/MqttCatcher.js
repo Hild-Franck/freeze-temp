@@ -17,10 +17,11 @@ var mongo = require('mongodb').MongoClient;
 var serverMongo = 'mongodb://10.31.3.44:27017/ThermoFridge';
 var serverMongoMaison = 'mongodb://192.168.0.27:27017/ThermoFridge';
 var serverMongo2 = 'mongodb://groupe4:lacalotte@192.168.43.248:27017/ThermoFridge';
-var app = require('./server');
+var app = require('./express/app');
+
 /* Web Server */
-var fs = require('fs');
-var http = require('http');
+// var fs = require('fs');
+// var http = require('http');
 
 /* Mqtt subscriber */
 var mqtt = require('mqtt');
@@ -127,7 +128,7 @@ mongo.connect(serverMongo, function (err, db) {
 	// 		response.end();
 	// 	});
 	// }).listen(8080);
-	// var io = require('socket.io').listen(server);
+	var io = require('socket.io').listen(app);
 	
 	app.listen(4000, '0.0.0.0', err => {
 		if (err) throw err;
