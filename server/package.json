@@ -1,0 +1,21 @@
+{
+  "name": "server_thermofridge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "ArduinoSimulator.js",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "express": "^4.13.4",
+    "mongodb": "^2.1.18",
+    "mongoose": "^4.4.14",
+    "morgan": "^1.7.0",
+    "mqtt": "^1.10.0",
+    "socketio": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mathieu Fontenille",
+  "license": "ISC"
+}

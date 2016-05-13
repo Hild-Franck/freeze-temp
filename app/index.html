@@ -1,56 +1,18 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Fridge Temperature</title>
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
     <link href="css/style.css" rel="stylesheet" />
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <script src="../bower_components/angular/angular.js"></script>
-
-    
-<script src="../node_modules/socket.io-client/socket.io.js"></script>
-<script src="../bower_components/angular-socket-io/socket.js"></script>
-<script src="../bower_components/Chart.js/Chart.js"></script>
-<script src="../bower_components/angular-chart.js/angular-chart.js"></script>
-
-    
-<script src="./app.js"></script>
-<script src="factories/dataHandler.js"></script>
-<script src="factories/mySocket.js"></script>
-<script src="controllers/charts.js"></script>
-<script src="controllers/menu.js"></script>
-<script src="controllers/settings.js"></script>
-<script src="controllers/sideMenuController.js"></script>
-<script src="views/sideMenu/sideMenu.js"></script>
 
 </head>
-<body ng-app="myApp">
-
-
-<!--<menu id="menu">
-    <div id="firstMenu">
-        <p id="pseudo">{{pseudo}}</p>
-        <img id="settingIcon" src="images/settingIcon.png">
-    </div>
-</menu>-->
-
-<main ng-controller="charts">
-    <div id="sensorsList">
-        <label ng-repeat="sensor in series">
-            <input ng-init="checked=true" ng-checked="true"
-                         ng-model="checked" ng-change="checkbox(sensor, checked)"
-                   type="checkbox" value="{{sensor}}">
-            {{sensor}}
-        </label>
-    </div>
-
-    <canvas id="line" class="chart chart-line"
-            width="400" height="200"
-            chart-data="data" chart-labels="labels"
-            chart-legend="true" chart-series="series">
-    </canvas>
-</main>
-
+<body>
+<p>Jésus</p>
+<div ng-include="template.url"></div>
 <script src="//localhost:35729/livereload.js"></script>
 </body>
 </html>
+
+
+
