@@ -6,14 +6,41 @@ myApp.factory('dataHandler', ['socket', function(socket){
 
     /**
      * @var data
-     * @type {{labels: {}, data: Array, series: {}}}
+     * @type {{labels: Array, data: Array, series: Array}}
      * Local temp data
      */
     var data = {
-        labels: {},
+        labels: [],
         data: [],
         series: []
     };
+
+    function processData(tempData){
+        var index;
+
+        for(var value in tempData.datas){
+            var dataToProcess = tempData.datas.name === undefined ? tempData.datas[value] : tempData.datas;
+
+            // Manage chart labels
+            console.log(dataToProcess);
+            if(dataToProcess.time != data.labels[data.labels.length - 1])
+                data.labels.push(dataToProcess.time);
+
+            // Manage chart series
+            index = data.series.indexOf(dataToProcess.name);
+
+            if(index == -1) {
+                index = data.series.length;
+                data.series.push(dataToProcess.name);
+                data.data[index] = [];
+            }
+
+            // Manage chart data
+            data.data[index].push(dataToProcess.temperature);
+        }
+        console.log(tempData);
+        console.log(data)
+    }
 
     /**
      * @event connect
@@ -29,28 +56,13 @@ myApp.factory('dataHandler', ['socket', function(socket){
      * Get data from server and put them in local data array
      */
 
+    socket.on('autoUpdate', function(serverData){
+        console.log(serverData);
+        processData(serverData);
+    });
+
     socket.on('lastDatas', function(serverData){
-        console.log(serverData.datas);
-        var index;
-
-        for(var value in serverData.datas){
-            var dataToProcess = serverData.datas[value];
-
-            // Manage chart labels
-            if(dataToProcess.time != data.labels[data.labels.length - 1])
-                data.labels.push(dataToProcess.time);
-
-            // Manage chart series
-            index = data.series.indexOf(dataToProcess.name);
-
-            if(index == -1) {
-                index = data.series.length;
-                data.series.push(dataToProcess.name)
-            }
-
-            // Manage chart data
-            data.data[index].push(dataToProcess.temperature);
-        }
+        processData(serverData);
     });
 
     /**

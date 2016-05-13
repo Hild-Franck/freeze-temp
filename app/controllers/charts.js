@@ -1,30 +1,13 @@
-appControllers.controller('charts', ['$scope', '$http', function ($scope, $http)
+appControllers.controller('charts', ['$scope', '$http', 'dataHandler', function ($scope, $http, dataHandler)
 {
-    function getRandomInt(min, max)
-    {
-        return Math.floor(Math.random() * (max - min)) + min;
-    }
+    $scope.labels = dataHandler.getData().labels;
+    $scope.series = dataHandler.getData().series;
+    $scope.data = dataHandler.getData().data;
 
-    var heures = [];
-    var allSensors = []
-    var capteur1 = [];
-    var capteur2 = [];
-    allSensors.push(capteur1, capteur2);
-
-    for (var i = 0; i < 24; i++)
-    {
-        heures.push(i+"h");
-        capteur1.push(getRandomInt(0, 20));
-        capteur2.push(getRandomInt(0, 20));
-    }
-
-    $scope.labels = heures;
-    $scope.series = [];
-    $scope.data = [];
-
+    /*
     addSensor("Capteur 1", capteur1);
     addSensor("Capteur 2", capteur2);
-
+*/
 
     $scope.checkbox = function (sensorName, etat)
     {
