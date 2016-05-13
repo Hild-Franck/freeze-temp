@@ -5,9 +5,9 @@
  * - Treat MQTT Datas (anti spam + anti useless data)
  * - Push MQTT Datas into database (security for non-conform datas)
  * - Webserver (anti XSS)
- * - Serve database MQTT datas for clients (JSON object via socket)
+ * - Serving database MQTT datas for clients (JSON object via socket)
+ * - Pushing into database every 10 secs with average values
  *
- * TODO : - Faire la moyenne des 10 valeurs re�ues en 10 sec et les pusher en BDD juste apr�s
  */
 //1- --------------------------SUPER VARIABLES GLOBALES--------------------------
 /* Client MongoDB */
@@ -52,8 +52,8 @@ mongo.connect(serverMongo, function (err, db) {
 
 //5- --------------------------VERIFICATION ET TRAITEMENT DES DONNEES AVANT LE PUSH EN BDD--------------------------
         db.collection('sensors', function (err, col) {
-            //On cherche � �viter d'enregistrer des valeurs inutiles ou invalides
-            //Si il n'y a pas d'erreurs et si la derni�re valeur valeur n'est pas similaire � la derni�re re�ue dans les 9 sec et qu'elle est est correcte
+            //On cherche à éviter d'enregistrer des valeurs inutiles ou invalides
+            //Si il n'y a pas d'erreurs et si la dernière valeur valeur n'est pas similaire à la dernière reçue dans les 9 sec et qu'elle est est correcte
             if (!err && (parseFloat(message.toString())) && (((new Date()) - mqttTimer) >= 9000 || ((correctValueBuffer[topic.toString()]) != message.toString()))) {
                 var bufferToUseName = "buffer1";
                 if (bufferToUse == true) bufferToUseName = "buffer1";
@@ -130,7 +130,5 @@ mongo.connect(serverMongo, function (err, db) {
                 socket.emit('lastDatas', {datas: numItems.sort({"time": 1})});
                 return;
             });
-
-
     });
 });
