@@ -14,4 +14,3 @@ client.on('connect', function () {
                 client.publish('ingesupb2/groupe4', ((Math.random() * (23 - 21) + 21).toFixed(2)).toString());
     }, 1000);
 });
-
